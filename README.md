@@ -10,4 +10,8 @@ Using the Alpha Vantage API, create a mostly accurate machine learning model to 
 
 
 # Current Progress: 
-- None
+- Now able to select data based on stock symbol and convert it into a dataframe
+
+
+# Thoughts:
+- Might switch to IEXCloud API
