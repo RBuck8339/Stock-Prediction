@@ -12,8 +12,6 @@ def get_data(symbol: str):
    
    data = requests.get(url)
    data = StringIO(data.text)
-   data = pd.read_csv(data, index_col = 'timestamp')
-
-   print(data.head())
+   data = pd.read_csv(data, index_col = 'timestamp', parse_dates=True)
    
-get_data('MSFT')
+   return data
