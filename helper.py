@@ -1,5 +1,3 @@
-# Currently just imports the data and tests with it
-
 import requests
 import pandas as pd 
 from io import StringIO
@@ -9,6 +7,7 @@ import matplotlib.dates as mdates
 
 my_key = 'DVC3S0LMT7YNYDC3'
   
+# Method to retrieve data from the Alpha Vantage API given a stock symbol
 def get_data(symbol: str):
    url = f'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&outputsize=full&datatype=csv&apikey={my_key}'
    
@@ -19,6 +18,7 @@ def get_data(symbol: str):
    return data
 
 
+# Method to plot data before running the model
 def plot_data(data: pd.DataFrame, symbol: str, key: str, time: str, title: str):
    plt.figure(figsize=(15, 7))
    plt.plot(data.index, data[key])
@@ -30,16 +30,15 @@ def plot_data(data: pd.DataFrame, symbol: str, key: str, time: str, title: str):
       plt.gca().xaxis.set_major_locator(mdates.YearLocator(2))  # Change interval as needed
    elif time == 'day':
       plt.gca().xaxis.set_major_locator(mdates.DayLocator(interval=3))
-      
-   plt.xticks(rotation=40)
-   plt.xlabel('Date')
    
    # Since volume has a different y-axis label than the prices
    if key == 'volume':
       plt.ylabel('Amount')
    else:
       plt.ylabel('Price $USD')
-      
+   
+   plt.xticks(rotation=40)
+   plt.xlabel('Date')
    plt.title(f'{title} History For {symbol}')
 
    plt.show()
