@@ -8,8 +8,15 @@ import matplotlib.dates as mdates
 
 my_key = 'DVC3S0LMT7YNYDC3'
   
-# Method to retrieve data from the Alpha Vantage API given a stock symbol
+  
 def get_data(symbol: str):
+   '''
+   Method to retrieve data from the Alpha Vantage API given a stock symbol
+   
+   Parameters
+   ----------
+   # symbol: The stock we want to get data from
+   '''
    url = f'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&outputsize=full&datatype=csv&apikey={my_key}'
    
    data = requests.get(url)
@@ -19,8 +26,18 @@ def get_data(symbol: str):
    return data
 
 
-# Method to plot data before running the model
 def plot_data(data: pd.DataFrame, symbol: str, key: str, time: str, title: str):
+   '''
+   Method to plot data before running the model based on given stock data
+   
+   Parameters
+   ----------
+   # data: My pandas dataframe of data to plot
+   # symbol: The stock that we are analyzing
+   # key: Which column of the dataframe we want to analyze
+   # time: The time period we are analyzing (all time for year; past 30 trading days for day)
+   # title: The title prefix for the graph
+   '''
    plt.figure(figsize=(15, 7))
    plt.plot(data.index, data[key])
    plt.xlim([data.index.min(), data.index.max()])
@@ -45,18 +62,22 @@ def plot_data(data: pd.DataFrame, symbol: str, key: str, time: str, title: str):
    plt.show()
    
 
-# Create sequences of x in order to predict y
 def extract_seqX_outY(data: np.array, N: int, offset: int):
-    '''
-    # Data: My numpy array of data from the dataframe
-    # N: My size that I want the sequence before to be
-    # Offset: Where we want to start the split
-    '''
-    X, y = [], []
+   '''
+   Part of the data preparation phase for the model
+   Create sequences of x in order to predict y
+   
+   Parameters
+   ----------
+   # data: My numpy array of data from the dataframe
+   # N: My size that I want the sequence before to be
+   # offset: Where we want to start the split
+   '''
+   X, y = [], []
 
-    for i in range(offset, len(data)):
-         if i >= N:
-            X.append(data[i - N:i])
-            y.append(data[i][3])
+   for i in range(offset, len(data)):
+      if i >= N:
+         X.append(data[i - N:i])
+         y.append(data[i][3])
 
-    return np.array(X), np.array(y)
+   return np.array(X), np.array(y)
