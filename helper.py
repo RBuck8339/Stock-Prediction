@@ -46,9 +46,9 @@ def plot_data(data: pd.DataFrame, symbol: str, key: str, time: str, title: str):
    
 
 # Create sequences of x in order to predict y
-def extract_seqX_outY(data: pd.DataFrame, N: int, offset: int):
+def extract_seqX_outY(data: np.array, N: int, offset: int):
     '''
-    # Data: My dataframe to work with
+    # Data: My numpy array of data from the dataframe
     # N: My size that I want the sequence before to be
     # Offset: Where we want to start the split
     '''
@@ -56,7 +56,7 @@ def extract_seqX_outY(data: pd.DataFrame, N: int, offset: int):
 
     for i in range(offset, len(data)):
          if i >= N:
-            X.append(data.iloc[i - N:i].values.tolist())
-            y.append(data[i]['close'])
+            X.append(data[i - N:i])
+            y.append(data[i][3])
 
     return np.array(X), np.array(y)
