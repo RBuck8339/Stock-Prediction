@@ -1,5 +1,6 @@
 import requests
 import pandas as pd 
+import numpy as np
 from io import StringIO
 import matplotlib.pyplot as plt 
 import matplotlib.dates as mdates
@@ -42,3 +43,20 @@ def plot_data(data: pd.DataFrame, symbol: str, key: str, time: str, title: str):
    plt.title(f'{title} History For {symbol}')
 
    plt.show()
+   
+
+# Create sequences of x in order to predict y
+def extract_seqX_outY(data: pd.DataFrame, N: int, offset: int):
+    '''
+    # Data: My dataframe to work with
+    # N: My size that I want the sequence before to be
+    # Offset: Where we want to start the split
+    '''
+    X, y = [], []
+
+    for i in range(offset, len(data)):
+         if i >= N:
+            X.append(data.iloc[i - N:i].values.tolist())
+            y.append(data[i]['close'])
+
+    return np.array(X), np.array(y)
