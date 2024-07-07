@@ -11,6 +11,8 @@ Using the Alpha Vantage API, create a mostly accurate machine learning model to 
 
 # Current Progress: 
 - Now able to select data based on stock symbol and convert it into a dataframe
+- Now able to plot data for viewing purposes
+- Now completed tentative data preprocessing steps for the model input
 
 
 # Thoughts:
