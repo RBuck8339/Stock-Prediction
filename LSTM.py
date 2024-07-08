@@ -1,4 +1,5 @@
 import torch.nn as nn
+from torch import zeros
 
 
 class LSTM(nn.Module):
@@ -11,7 +12,18 @@ class LSTM(nn.Module):
     
     
     def forward(self, x):
-        pass
+        batch_size = x.shape[0]
+        
+        x = self.linear_1(x)
+        x = self.activation(x)
+        lstm_out, (h_n, c_n) = self.lstm_layers(x)
+        x = h_n.permute(1, 0, 2).reshape(batch_size, -1)
+        x = self.dropout_layer(x)
+        predictions = self.linear_2(x)
+        
+        return predictions[:, -1]
+        
+        
     
     
     def loss(self):
