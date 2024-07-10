@@ -4,7 +4,8 @@ from torch import zeros
 
 class LSTM(nn.Module):
     def __init__(self, input_size, hidden_size, num_layers, dropout):
-        self.linear_1 = nn.Linear(in_features=input_size, hidden_size=hidden_size)
+        super().__init__()
+        self.linear_1 = nn.Linear(in_features=input_size, out_features=hidden_size)
         self.activation = nn.ReLU()
         self.lstm_layers = nn.LSTM(input_size=hidden_size, hidden_size=hidden_size, num_layers=num_layers)
         self.dropout_layer = nn.Dropout(p=dropout)
@@ -22,8 +23,6 @@ class LSTM(nn.Module):
         predictions = self.linear_2(x)
         
         return predictions[:, -1]
-        
-        
     
     
     def loss(self):
