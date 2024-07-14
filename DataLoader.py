@@ -1,7 +1,7 @@
 import torch
 from torch.utils.data import Dataset
 
-class DataLoader(Dataset):
+class MyDataLoader(Dataset):
     def __init__(self, sequences, labels):
         self.sequences = sequences
         self.labels = labels
